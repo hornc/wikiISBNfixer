@@ -25,12 +25,12 @@ DOIBARE  = re.compile(r'[^=]((?:DOI: )?https?://doi.org/(\S+))')
 # [[ASIN (identifier)|ASIN]]&nbsp;B0026B3KAI
 ASINBLOCK = re.compile(r'(\[\[ASIN \(identifier\)\|ASIN\]\][^0-9A-Z]*([0-9A-Z]+))')
 
-ISBNBLOCK = re.compile(r'\(<nowiki>ISBN\s*([0-9xX-]+)</nowiki>\)?')
-
 ISBN_NOWIKI = re.compile(r'(<nowiki>ISBN\s*([0-9xX -]+)</nowiki>)')
-#ISBNBLOCK = re.compile(r'\[\[ISBN\]\] \[\[Special:BookSources/[0-9xX]+\|([0-9xX]+)\]\]')
+
 # [[ISBN (identifier)|ISBN]] [[Special:BookSources/978-1-4314-0578-7|<bdi>978-1-4314-0578-7</bdi>]]
 ISBN_SOURCES = re.compile(r'(\[\[ISBN[^\]]*\]\][^\[]*\[\[Special:BookSources/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
+SBN_SOURCES = re.compile(r'(\[\[SBN[^\]]*\]\][^\[]*\[\[Special:BookSources/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
+
 
 #[[Spezial:ISBN Suche/388022174X|ISBN 3-88022-174-X]]
 ISBN_SOURCES_DE = re.compile(r'(\[\[(?:\:de\:)?Spezial:ISBN[ -]Suche/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
@@ -56,15 +56,20 @@ CITE_ISBN = re.compile(r'(\|\s*isbn\s*=(?:\u200e)?\s*([0-9xX-]+))')
 
 
 
-def isbn_template(isbn):
+def isbn_template(isbn, sbn=False):
+    template = '{{SBN|' if sbn else '{{ISBN|'
     try:
         # return '{{ISBNT|' + hyphenate(isbn) + '}}'
-        return '{{ISBN|' + hyphenate(isbn) + '}}'
+        return template + hyphenate(isbn) + '}}'
     except IsbnMalformedError as e:
-        return '{{ISBN|' + isbn + '}}'
+        return template + isbn + '}}'
     except Exception as e:
         print(f"{isbn}: {e}")
         raise e
+
+
+def sbn_template(sbn):
+    return isbn_template(sbn, sbn=True)
 
 
 def cite_isbn(isbn):
@@ -100,12 +105,13 @@ FIXERS = [
         (DOIBARE, doi_template),
         (ASINBLOCK, asin_template),
         (ISBN_13, isbn_template),
-        (ISBN_SOURCES, isbn_template), 
-        (ISBN_SOURCES_DE, isbn_template), 
-        (ISBN_SOURCES_FR, isbn_template), 
-        (ISBN_SOURCES_IT, isbn_template), 
-        (ISBN_OTHER, isbn_template), 
-        (ISBN_NOWIKI, isbn_template), 
+        (ISBN_SOURCES, isbn_template),
+        (SBN_SOURCES, sbn_template),
+        (ISBN_SOURCES_DE, isbn_template),
+        (ISBN_SOURCES_FR, isbn_template),
+        (ISBN_SOURCES_IT, isbn_template),
+        (ISBN_OTHER, isbn_template),
+        (ISBN_NOWIKI, isbn_template),
         (ISBN_PLAIN, isbn_template),
         (ISBN_LINK, isbn_template),
         (ISBN_EAN, isbn_template),
