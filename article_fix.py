@@ -10,7 +10,8 @@ from isbn_hyphenate.isbn_hyphenate import IsbnMalformedError
 API = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles="
 
 #                        [[OCLC (identifier)|OCLC]]&nbsp;1183423539
-OCLCBLOCK = re.compile(r'(\[\[OCLC \(identifier\)\|OCLC\]\][^0-9]*([0-9]+))')
+OCLCBLOCK = re.compile(r'( *\[\[OCLC \(identifier\)\|OCLC\]\][^0-9]*([0-9]+))')
+OCLCBARE  = re.compile(r'( *OCLC[^=\|]([0-9]+))')
 
 #                        [[ISSN (identifier)|ISSN]]&nbsp;0015-587X
 ISSNBLOCK = re.compile(r'( *\[\[ISSN \(identifier\)\|ISSN\]\][^0-9]*([0-9]{4}-[0-9Xx]{4}))')
@@ -81,7 +82,7 @@ def cite_isbn(isbn):
 
 
 def oclc_template(ocn):
-    return '{{OCLC|' + ocn + '}}'
+    return ' {{OCLC|' + ocn + '}}'
 
 
 def issn_template(issn):
@@ -99,6 +100,7 @@ def doi_template(doi):
 # (matcher regex, fixer fn.)
 FIXERS = [
         (OCLCBLOCK, oclc_template),
+        (OCLCBARE, oclc_template),
         (ISSNBLOCK, issn_template),
         (ISSNBARE, issn_template),
         (DOIBLOCK, doi_template),
