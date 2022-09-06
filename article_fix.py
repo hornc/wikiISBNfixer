@@ -18,9 +18,9 @@ ISSNBLOCK = re.compile(r'( *\[\[ISSN \(identifier\)\|ISSN\]\][^0-9]*([0-9]{4}-[0
 ISSNBARE  = re.compile(r'( *ISSN[^=\|]([0-9]{4}-[0-9Xx]{4}))')
 
 # [[Doi (identifier)|doi]]:10.2307/j.ctt4cgmxc.17
-DOIBLOCK = re.compile(r'(\[\[Doi \(identifier\)\|doi\]\]:([^ <]+[^ ,\.<]))')
+DOIBLOCK = re.compile(r'(\[\[Doi \(identifier\)\|doi\]\]:([^ <]+[^ ,\.<\']))')
 # DOI: https://doi.org/10.1075/cogls.00027.hov
-DOIBARE  = re.compile(r'[^=]((?:DOI: )?https?://doi.org/(\S+))')
+DOIBARE  = re.compile(r'[^=]((?:DOI: )?https?://doi.org/([^ <]+[^ ,\.<\']))')
 
 
 # [[ASIN (identifier)|ASIN]]&nbsp;B0026B3KAI
