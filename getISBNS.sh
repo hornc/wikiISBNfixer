@@ -15,8 +15,8 @@ classes=$(egrep -o '<li>[0-9]+ x ISBN..' ISBN_errors_${datetag}.html | sed 's/<l
 rawLinks=$(echo "$classes" | fgrep '[' | cut -f1)
 otherLinks=$(($rawLinks - 2 * $manualLinks))
 
-echo -e "Manual ISBN links\t$manualLinks"
-echo -e "Other links\t$otherLinks"
+echo -e "$manualLinks\tManual ISBN links"
+echo -e "$otherLinks\tOther links"
 echo "$classes" | fgrep -v '['
 
 echo
