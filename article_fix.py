@@ -25,6 +25,8 @@ DOIBARE  = re.compile(r'[^=]((?:DOI: )?https?://doi.org/([^ <]+[^ ,\.<\']))')
 
 # [[ASIN (identifier)|ASIN]]&nbsp;B0026B3KAI
 ASINBLOCK = re.compile(r'(\[\[ASIN \(identifier\)\|ASIN\]\][^0-9A-Z]*([0-9A-Z]+))')
+AMAZON_LINK = re.compile(r'(\[https://www.amazon.*ISBN ([0-9xX-]+)[^0-9\]]*\])')
+
 
 ISBN_NOWIKI = re.compile(r'(<nowiki>ISBN\s*([0-9xX -]+)</nowiki>)')
 
@@ -106,6 +108,7 @@ FIXERS = [
         (DOIBLOCK, doi_template),
         (DOIBARE, doi_template),
         (ASINBLOCK, asin_template),
+        (AMAZON_LINK, isbn_template),
         (ISBN_13, isbn_template),
         (ISBN_SOURCES, isbn_template),
         (SBN_SOURCES, sbn_template),
