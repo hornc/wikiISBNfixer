@@ -46,7 +46,7 @@ ISBN_EAN = re.compile(r'((?:ISBN/)?EAN:? (978[0-9-]+))')
 
 ISBN_13 = re.compile(r'(ISBN.?13: ?([0-9xX-]+))')
 ISBN_PLAIN = re.compile(r'(ISBN(?:&nbsp;)?[\s:]*([ 0-9-]+[0-9xX]))', re.IGNORECASE)
-HYPHENATE_EXISTING = re.compile(r'({{ISBN\|\s*([0-9xX-]+)}})')
+HYPHENATE_EXISTING = re.compile(r'({{\s*ISBN\s*\|\s*([0-9xX-]+)}})')
 
 # [[ISBN]] 3-87034-047-9
 ISBN_LINK = re.compile(r'(\[\[ISBN\]\]\s*([0-9xX-]+))')
