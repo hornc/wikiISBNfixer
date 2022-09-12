@@ -40,7 +40,9 @@ SBN_SOURCES = re.compile(r'(\[\[SBN[^\]]*\]\][^\[]*\[\[Special:BookSources/[0-9x
 ISBN_SOURCES_DE = re.compile(r'(\[\[(?:\:de\:)?Spezial:ISBN[ -]Suche/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
 ISBN_SOURCES_FR = re.compile(r'(\[\[:fr:Spécial:Ouvrages de référence/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
 ISBN_SOURCES_IT = re.compile(r'(\[\[:it:Speciale:RicercaISBN/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
+ISBN_SOURCES_OTHER = re.compile(r'(\[\[Spe[cz][^\/]*\/([0-9xX-]+)\|ISBN [0-9xX-]*\]\])')
 ISBN_OTHER = re.compile(r'(\[\[Special:BookSources\|ISBN-1.: ([0-9xX-]+)[^0-9\]]*\]\])')
+
 
 ISBN_EAN = re.compile(r'((?:ISBN/)?EAN:? (978[0-9-]+))')
 
@@ -117,6 +119,7 @@ FIXERS = [
         (ISBN_SOURCES_DE, isbn_template),
         (ISBN_SOURCES_FR, isbn_template),
         (ISBN_SOURCES_IT, isbn_template),
+        (ISBN_SOURCES_OTHER, isbn_template),
         (ISBN_OTHER, isbn_template),
         (ISBN_NOWIKI, isbn_template),
         (ISBN_PLAIN, isbn_template),
