@@ -32,7 +32,7 @@ BOOKSELLER_LINK = re.compile(r'(\[http[^\[]*ISBN ([0-9xX -]+)[^0-9\]]*\])')
 ISBN_NOWIKI = re.compile(r'(<nowiki>ISBN\s*([0-9xX -]+)</nowiki>)')
 
 # [[ISBN (identifier)|ISBN]] [[Special:BookSources/978-1-4314-0578-7|<bdi>978-1-4314-0578-7</bdi>]]
-ISBN_SOURCES = re.compile(r'(\[\[ISBN[^\]]*\]\][^\[]*\[\[Special:BookSources/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
+ISBN_SOURCES = re.compile(r'(\[\[[^\[]*ISBN[^\]]*\]\][^\[]*\[\[Special:BookSources/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
 SBN_SOURCES = re.compile(r'(\[\[SBN[^\]]*\]\][^\[]*\[\[Special:BookSources/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
 
 
@@ -47,7 +47,7 @@ ISBN_OTHER = re.compile(r'(\[\[Special:BookSources\|ISBN-1.: ([0-9xX-]+)[^0-9\]]
 ISBN_EAN = re.compile(r'((?:ISBN/)?EAN:? (978[0-9-]+))')
 
 ISBN_13 = re.compile(r'(ISBN.?13: ?([0-9xX-]+))')
-ISBN_PLAIN = re.compile(r'(ISBN(?:&nbsp;)?[\s:]*([ 0-9-]+[0-9xX]))', re.IGNORECASE)
+ISBN_PLAIN = re.compile(r'(ISBN(?:&nbsp;)?[\s:]*([0-9-]+[0-9xX]))', re.IGNORECASE)
 HYPHENATE_EXISTING = re.compile(r'({{\s*ISBN\s*\|\s*([0-9xX-]+)}})')
 
 # [[ISBN]] 3-87034-047-9
