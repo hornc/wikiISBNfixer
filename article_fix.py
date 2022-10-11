@@ -10,7 +10,7 @@ from isbn_hyphenate.isbn_hyphenate import IsbnMalformedError
 API = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles="
 
 #                        [[OCLC (identifier)|OCLC]]&nbsp;1183423539
-OCLCBLOCK = re.compile(r'( *\[\[OCLC \(identifier\)\|OCLC\]\][^0-9]*([0-9]+))')
+OCLCBLOCK = re.compile(r'( *\[\[[^\|]*\|OCLC\]\][^0-9]*([0-9]+))')
 OCLCBARE  = re.compile(r'( *OCLC[^=\|]([0-9]+))')
 
 #                        [[ISSN (identifier)|ISSN]]&nbsp;0015-587X
@@ -138,6 +138,10 @@ def get_markup(r_json):
         return content.get('revisions')[0]['*']
 
 
+def strip_small(s):
+    return s.replace('<small>', '').replace('</small>', '')
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Wikipedia article ISBN fixer / formatter.")
     parser.add_argument('article', help='Wikipedia article title to process.')
@@ -176,6 +180,7 @@ if __name__ == '__main__':
                     target = m[0]
                     template = template_fn(m[1])
                     line = line.replace(target, template)
+                    line = strip_small(line)
         if line != orig:
             changes += 1
         if not args.changes or (line != orig):
