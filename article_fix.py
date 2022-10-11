@@ -28,6 +28,8 @@ ASINBLOCK = re.compile(r'(\[\[ASIN \(identifier\)\|ASIN\]\][^0-9A-Z]*([0-9A-Z]+)
 AMAZON_LINK = re.compile(r'(\[https://www.amazon.*ISBN ([0-9xX-]+)[^0-9\]]*\])')
 BOOKSELLER_LINK = re.compile(r'(\[http[^\[]*ISBN ([0-9xX -]+)[^0-9\]]*\])')
 
+# ISBN 1326613804, 9781326613808  source: wiki:List of Philippine mythological figures
+ISBN_DUAL = re.compile(r'((?:{{)?ISBN.[0-9xX]{10}(?:}})?, (97[0-9]{11}))')
 
 ISBN_NOWIKI = re.compile(r'(<nowiki>ISBN\s*([0-9xX -]+)</nowiki>)')
 
@@ -113,6 +115,7 @@ FIXERS = [
         (ASINBLOCK, asin_template),
         (AMAZON_LINK, isbn_template),
         (BOOKSELLER_LINK, isbn_template),
+        (ISBN_DUAL, isbn_template),
         (ISBN_13, isbn_template),
         (ISBN_SOURCES, isbn_template),
         (SBN_SOURCES, sbn_template),
