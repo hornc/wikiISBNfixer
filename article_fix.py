@@ -53,7 +53,7 @@ ISBN_PLAIN = re.compile(r'(ISBN(?:&nbsp;)?[\s:]*([0-9-]+[0-9xX]))', re.IGNORECAS
 HYPHENATE_EXISTING = re.compile(r'({{\s*ISBN\s*\|\s*([0-9xX-]+)}})')
 
 # [[ISBN]] 3-87034-047-9
-ISBN_LINK = re.compile(r'(\[\[ISBN\]\]\s*([0-9xX-]+))')
+ISBN_LINK = re.compile(r'(\[\[(?:International Standard Book Number\|)?ISBN\]\]\s*([0-9xX-]+))')
 
 # cite ISBN with stray LTR Unicode \u200e
 CITE_ISBN = re.compile(r'(\|\s*isbn\s*=(?:\u200e)?\s*([0-9xX-]+))')
