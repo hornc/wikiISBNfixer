@@ -48,7 +48,7 @@ ISBN_OTHER = re.compile(r'(\[\[Special:BookSources\|ISBN-1.: ([0-9xX-]+)[^0-9\]]
 
 ISBN_EAN = re.compile(r'((?:ISBN/)?EAN:? (978[0-9-]+))')
 
-ISBN_13 = re.compile(r'(ISBN.?13: ?([0-9xX-]+))')
+ISBN_1x = re.compile(r'(ISBN.?1[30]:?\s?([0-9xX-]+))')
 ISBN_PLAIN = re.compile(r'[^{](ISBN(?:&nbsp;|-1[03])?[\s\|:]*([0-9-]+[0-9xX]))', re.IGNORECASE)
 HYPHENATE_EXISTING = re.compile(r'({{\s*ISBN\s*\|\s*([0-9xX-]+)}})')
 
@@ -116,7 +116,7 @@ FIXERS = [
         (AMAZON_LINK, isbn_template),
         (BOOKSELLER_LINK, isbn_template),
         (ISBN_DUAL, isbn_template),
-        (ISBN_13, isbn_template),
+        (ISBN_1x, isbn_template),
         (ISBN_SOURCES, isbn_template),
         (SBN_SOURCES, sbn_template),
         (ISBN_SOURCES_DE, isbn_template),
