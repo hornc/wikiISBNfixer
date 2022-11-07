@@ -21,6 +21,7 @@ ISSNBARE  = re.compile(r'( *ISSN[^=\|]([0-9]{4}-[0-9Xx]{4}))')
 DOIBLOCK = re.compile(r'(\[\[Doi \(identifier\)\|doi\]\]:([^ <]+[^ ,\.<\']))')
 # DOI: https://doi.org/10.1075/cogls.00027.hov
 DOIBARE  = re.compile(r'[^=]((?:DOI: )?https?://doi.org/([^ <]+[^ ,\.<\']))')
+DOISIMPLE = re.compile(r'(doi:([^ <]+[^ ,\.<\']))')
 
 
 # [[ASIN (identifier)|ASIN]]&nbsp;B0026B3KAI
@@ -112,6 +113,7 @@ FIXERS = [
         (ISSNBARE, issn_template),
         (DOIBLOCK, doi_template),
         (DOIBARE, doi_template),
+        (DOISIMPLE, doi_template),
         (ASINBLOCK, asin_template),
         (AMAZON_LINK, isbn_template),
         (BOOKSELLER_LINK, isbn_template),
