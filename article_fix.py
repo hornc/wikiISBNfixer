@@ -44,7 +44,7 @@ ISBN_SOURCES_DE = re.compile(r'(\[\[(?:\:de\:)?Spezial:ISBN[ -]Suche/[0-9xX-]+\|
 ISBN_SOURCES_FR = re.compile(r'(\[\[:fr:Spécial:Ouvrages de référence/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
 ISBN_SOURCES_IT = re.compile(r'(\[\[:it:Speciale:RicercaISBN/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
 ISBN_SOURCES_NN = re.compile(r'((?:\[\[International Standard Book Number\|ISBN\]\] )\[\[Sp[eé][cz][^\/]*\/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
-ISBN_SOURCES_OTHER = re.compile(r'(\[\[Spe[cz][^\/]*\/([0-9xX-]+)\|ISBN [0-9xX-]*\]\])')
+ISBN_SOURCES_OTHER = re.compile(r'(\[\[Spe[cz][^\/]*\/([0-9xX-]+)\|(?:ISBN )?[0-9xX-]*\]\])')
 ISBN_OTHER = re.compile(r'(\[\[Special:BookSources\|ISBN-1.: ([0-9xX-]+)[^0-9\]]*\]\])')
 
 
