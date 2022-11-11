@@ -66,11 +66,13 @@ CITE_ISBN = re.compile(r'(\|\s*isbn\s*=(?:\u200e)?\s*([0-9xX-]+))')
 #ISBNBLOCK = re.compile(r'(\(ISBN\[\[[^\|]+\|([0-9xX -]+)\]\]\))')
 
 
-
-def isbn_template(isbn, sbn=False):
-    template = '{{SBN|' if sbn else '{{ISBN|'
+def isbn_template(isbn, sbn=False, table=False, **kwargs):
+    template = '{{ISBN|'
+    if sbn:
+        template = '{{SBN|'
+    elif table:
+        template = '{{ISBNT|'
     try:
-        # return '{{ISBNT|' + hyphenate(isbn) + '}}'
         return template + hyphenate(isbn) + '}}'
     except IsbnMalformedError as e:
         return template + isbn + '}}'
@@ -80,10 +82,10 @@ def isbn_template(isbn, sbn=False):
 
 
 def sbn_template(sbn):
-    return isbn_template(sbn, sbn=True)
+    return isbn_template(sbn, sbn=True, **kwargs)
 
 
-def cite_isbn(isbn):
+def cite_isbn(isbn, **kwargs):
     try:
         return '|isbn=' + hyphenate(isbn)
     except Exception as e:
@@ -91,19 +93,21 @@ def cite_isbn(isbn):
         raise e
 
 
-def oclc_template(ocn):
+def oclc_template(ocn, **kwargs):
+    # TODO: use {{OCLC search link| on --table
     return ' {{OCLC|' + ocn + '}}'
 
 
-def issn_template(issn):
+def issn_template(issn, **kwargs):
+    # TODO: use {{ISSN link| on --table
     return ' {{ISSN|' + issn + '}}'
 
 
-def asin_template(asin):
+def asin_template(asin, **kwargs):
     return '{{ASIN|' + asin + '}}'
 
 
-def doi_template(doi):
+def doi_template(doi, **kwargs):
     return '{{doi|' + doi + '}}'
 
 
@@ -154,6 +158,7 @@ if __name__ == '__main__':
     parser.add_argument('--changes', '-c', help='Show only changes made.', action='store_true')
     parser.add_argument('--nobullet', '-B', help='No bullet spacing changes.', action='store_true')
     parser.add_argument('--raw', '-r', help='Show raw article markup without making any changes..', action='store_true')
+    parser.add_argument('--table', '-t', help='Use ISBNT template for ISBNs within tables: https://en.wikipedia.org/wiki/Template:ISBNT', action='store_true')
     args = parser.parse_args()
 
     articlename = args.article
@@ -184,7 +189,7 @@ if __name__ == '__main__':
             for m in all_m:
                 if m:
                     target = m[0]
-                    template = template_fn(m[1])
+                    template = template_fn(m[1], table=args.table)
                     line = line.replace(target, template)
                     line = strip_small(line)
         if line != orig:
