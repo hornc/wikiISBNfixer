@@ -27,7 +27,7 @@ DOISIMPLE = re.compile(r'(doi:([^ <]+[^ ,\.<\']))')
 # [[ASIN (identifier)|ASIN]]&nbsp;B0026B3KAI
 ASINBLOCK = re.compile(r'(\[\[ASIN \(identifier\)\|ASIN\]\][^0-9A-Z]*([0-9A-Z]+))')
 AMAZON_LINK = re.compile(r'(\[https://www.amazon.*ISBN ([0-9xX-]+)[^0-9\]]*\])')
-BOOKSELLER_LINK = re.compile(r'(\[http[^\[]*ISBN ([0-9xX -]+)[^0-9\]]*\])')
+BOOKSELLER_LINK = re.compile(r'(\[http[^\]\[]*ISBN ([0-9xX -]+)[^0-9\]]*\])')
 
 # ISBN 1326613804, 9781326613808  source: wiki:List of Philippine mythological figures
 ISBN_DUAL = re.compile(r'((?:{{)?ISBN.[0-9xX]{10}(?:}})?, (97[0-9]{11}))')
