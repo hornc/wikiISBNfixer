@@ -10,7 +10,7 @@ from isbn_hyphenate.isbn_hyphenate import IsbnMalformedError
 API = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles="
 
 #                        [[OCLC (identifier)|OCLC]]&nbsp;1183423539
-OCLCBLOCK = re.compile(r'( *\[\[[^\|]*\|OCLC\]\][^0-9]*([0-9]+))')
+OCLCBLOCK = re.compile(r'( *\[\[[^\|\[]*\|OCLC\]\][^0-9]*([0-9]+))')
 OCLCBARE  = re.compile(r'( *OCLC[^=\|]([0-9]+))')
 
 #                        [[ISSN (identifier)|ISSN]]&nbsp;0015-587X
