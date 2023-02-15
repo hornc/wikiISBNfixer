@@ -51,7 +51,7 @@ ISBN_OTHER = re.compile(r'(\[\[Special:BookSources\|ISBN-1.: ([0-9xX-]+)[^0-9\]]
 ISBN_EAN = re.compile(r'((?:ISBN/)?EAN:? (978[0-9-]+))')
 
 ISBN_1x = re.compile(r'(ISBN.?1[30]:?\s?([0-9xX-]{10,}))')
-ISBN_PLAIN = re.compile(r'[^{](ISBN(?:&nbsp;|-1[03])?[\s\|:]*([0-9-–]+[0-9xX]))', re.IGNORECASE)
+ISBN_PLAIN = re.compile(r'[^{](\'*ISBN(?:&nbsp;|-1[03])?:?\'*[\s\|:]*([0-9-–]+[0-9xX]))', re.IGNORECASE)
 ISBN_EQUALS = re.compile(r'[^\|]\s*(isbn\s*=\s*([0-9-]+[0-9xX]))', re.IGNORECASE)  # isbn= outside a template
 HYPHENATE_EXISTING = re.compile(r'({{\s*ISBN\s*\|\s*([0-9xX-]+)}})')
 
