@@ -66,6 +66,8 @@ CITE_ISBN = re.compile(r'(\|\s*isbn\s*=(?:\u200e)?\s*([0-9xX-]+))')
 # (ISBN[[خاص:مصادر كتاب/9789948367512|9789948367512]])
 #ISBNBLOCK = re.compile(r'(\(ISBN\[\[[^\|]+\|([0-9xX -]+)\]\]\))')
 
+LIST_MARKER = re.compile(r'^([*#]+)[^*# ]')
+
 
 def isbn_template(isbn, sbn=False, table=False, **kwargs):
     isbn = isbn.replace('–', '-')
@@ -159,7 +161,7 @@ def strip_small(s):
     return s.replace('<small>', '').replace('</small>', '')
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description="Wikipedia article ISBN fixer / formatter.")
     parser.add_argument('article', help='Wikipedia article title to process.')
     parser.add_argument('--changes', '-c', help='Show only changes made.', action='store_true')
@@ -181,15 +183,12 @@ if __name__ == '__main__':
     for line in f.split('\n'):
         orig = line
         # space after list items:
-        list_markers = ('*', '#')
         if not args.nobullet:
-            for marker in list_markers:
-                if not line.startswith(marker):
-                    continue
+            if m := LIST_MARKER.match(line):
                 if len(line) == 1:
-                    line = '' 
-                elif line[1] not in (' ', marker):
-                    line = f'{marker} ' + line[1:]
+                    line = ''
+                else:
+                    line = line.replace(m[1], m[1] + ' ', 1)
 
         for regex, template_fn in FIXERS:
             all_m = regex.findall(line)
@@ -205,3 +204,7 @@ if __name__ == '__main__':
             print(line)
     print()
     print('LINES CHANGED:', changes)
+
+
+if __name__ == '__main__':
+    main()
