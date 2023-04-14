@@ -32,7 +32,7 @@ BOOKSELLER_LINK = re.compile(r'(\[http[^\]\[]*ISBN ([0-9xX -]+)[^0-9\]]*\])')
 # ISBN 1326613804, 9781326613808  source: wiki:List of Philippine mythological figures
 ISBN_DUAL = re.compile(r'((?:{{)?ISBN.[0-9xX]{10}(?:}})?, (97[0-9]{11}))')
 
-ISBN_NOWIKI = re.compile(r'(<nowiki>ISBN\s*([0-9xX -]+)</nowiki>)')
+ISBN_NOWIKI = re.compile(r'(\(?<nowiki>ISBN\s*([0-9xX -]+)</nowiki>\)?)')
 
 # [[ISBN (identifier)|ISBN]] [[Special:BookSources/978-1-4314-0578-7|<bdi>978-1-4314-0578-7</bdi>]]
 ISBN_SOURCES = re.compile(r'((?:\[\[[^\[]*)?ISBN(?:[^\]]*\]\][^\[]*)?\s*\[\[Special:BookSources/[0-9xX-]+\|[^0-9]*([0-9xX-]+)[^0-9\]]*\]\])')
@@ -66,7 +66,7 @@ CITE_ISBN = re.compile(r'(\|\s*isbn\s*=(?:\u200e)?\s*([0-9xX-]+))')
 # (ISBN[[خاص:مصادر كتاب/9789948367512|9789948367512]])
 #ISBNBLOCK = re.compile(r'(\(ISBN\[\[[^\|]+\|([0-9xX -]+)\]\]\))')
 
-LIST_MARKER = re.compile(r'^([*#]+)[^*# ]')
+LIST_MARKER = re.compile(r'^([*#]+)([^*# ]|$)')
 
 
 def isbn_template(isbn, sbn=False, table=False, **kwargs):
@@ -186,7 +186,8 @@ def main():
         if not args.nobullet:
             if m := LIST_MARKER.match(line):
                 if len(line) == 1:
-                    line = ''
+                    changes += 1
+                    continue
                 else:
                     line = line.replace(m[1], m[1] + ' ', 1)
 
