@@ -62,6 +62,10 @@ ISBN_LINK = re.compile(r'(\[\[(?:International Standard Book Number\|)?ISBN\]\]\
 # cite ISBN with stray LTR Unicode \u200e
 CITE_ISBN = re.compile(r'(\|\s*isbn\s*=(?:\u200e)?\s*([0-9xX–-]+))')
 
+# Journal book review ISBN:
+REVIEW_TITLE = re.compile(r'(([Cc]ite journal[^}]+title\s*=\s*[^|]*ISBN[^|]*))')
+
+
 # for https://en.wikipedia.org/wiki/Reem_Saleh_Al_Gurg
 # (ISBN[[خاص:مصادر كتاب/9789948367512|9789948367512]])
 #ISBNBLOCK = re.compile(r'(\(ISBN\[\[[^\|]+\|([0-9xX -]+)\]\]\))')
@@ -101,6 +105,10 @@ def cite_isbn(isbn, **kwargs):
         raise e
 
 
+def quote_isbn(cite, **kwargs):
+    return cite.replace('ISBN', '{{text|ISBN}}')
+
+
 def oclc_template(ocn, **kwargs):
     # TODO: use {{OCLC search link| on --table
     return ' {{OCLC|' + ocn + '}}'
@@ -131,6 +139,7 @@ FIXERS = [
         (ASINBLOCK, asin_template),
         (AMAZON_LINK, isbn_template),
         (BOOKSELLER_LINK, isbn_template),
+        (REVIEW_TITLE, quote_isbn),
         (ISBN_DUAL, isbn_template),
         (ISBN_1x, isbn_template),
         (ISBN_SOURCES, isbn_template),
@@ -195,7 +204,7 @@ def main():
         for regex, template_fn in FIXERS:
             all_m = regex.findall(line)
             for m in all_m:
-                if m:
+                if m:  # If regex matches, replace the match m[0] with fn(m[1])
                     target = m[0]
                     template = template_fn(m[1], table=args.table)
                     line = line.replace(target, template)
