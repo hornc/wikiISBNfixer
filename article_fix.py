@@ -55,6 +55,7 @@ ISBN_PLAIN = re.compile(r'[^{](\'*ISBN(?:&nbsp;|-1[03])?:?\'*[\s\|:]*([0-9–‐
 ISBN_EQUALS = re.compile(r'[^\|]\s*(isbn\s*=\s*([0-9-]+[0-9xX]))', re.IGNORECASE)  # isbn= outside a template
 HYPHENATE_EXISTING = re.compile(r'({{\s*ISBN\s*\|\s*([0-9xX-]+)}})')
 ISBN_SPACED = re.compile(r'(ISBN ((97[89])? ?([0-9]+ )+[0-9xX]+))(?:[<,\.]|$)')
+ISBN_BDI = re.compile(r'(ISBN <bdi>([0-9xX-]+)</bdi>)')
 
 # [[ISBN]] 3-87034-047-9
 ISBN_LINK = re.compile(r'(\[\[(?:International Standard Book Number\|)?ISBN\]\]\s*([0-9xX-]+))')
@@ -152,6 +153,7 @@ FIXERS = [
         (ISBN_OTHER, isbn_template),
         (ISBN_NOWIKI, isbn_template),
         (ISBN_LINK, isbn_template),
+        (ISBN_BDI, isbn_template),
         (ISBN_EAN, isbn_template),
         (HYPHENATE_EXISTING, isbn_template),
         (CITE_ISBN, cite_isbn),
