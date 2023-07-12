@@ -66,7 +66,7 @@ ISBN_LINK = re.compile(r'(\[\[(?:International Standard Book Number\|)?ISBN\]\]\
 CITE_ISBN = re.compile(r'(\|\s*isbn\s*=(?:\u200e)?\s*([0-9xX–-]+))')
 
 # Journal book review ISBN:
-REVIEW_TITLE = re.compile(r'(([Cc]ite journal[^}]+title\s*=\s*[^|]*ISBN[^|]*))')
+REVIEW_TITLE = re.compile(r'((cite journal[^}]+title\s*=\s*[^|]*ISBN[^|]*))', re.IGNORECASE)
 
 
 # for https://en.wikipedia.org/wiki/Reem_Saleh_Al_Gurg
@@ -109,7 +109,7 @@ def cite_isbn(isbn, **kwargs):
 
 
 def quote_isbn(cite, **kwargs):
-    return cite.replace('ISBN', '{{text|ISBN}}')
+    return cite.replace('ISBN', '{{text|ISBN}}').replace('isbn', '{{text|isbn}}')
 
 
 def oclc_template(ocn, **kwargs):
