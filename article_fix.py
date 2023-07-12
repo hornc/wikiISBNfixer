@@ -12,6 +12,7 @@ API = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvlimit=1&
 #                        [[OCLC (identifier)|OCLC]]&nbsp;1183423539
 OCLCBLOCK = re.compile(r'( *\[\[[^\|\[]*\|OCLC\]\][^0-9]*([0-9]+))')
 OCLCBARE  = re.compile(r'( *OCLC[^=\|]([0-9]+))')
+OCLC_SQ = re.compile(r'( *\[\[OCLC\|([0-9]+)\]\])')
 
 #                        [[ISSN (identifier)|ISSN]]&nbsp;0015-587X
 ISSNBLOCK = re.compile(r'( *\[\[ISSN \(identifier\)\|ISSN\]\][^0-9]*([0-9]{4}-[0-9Xx]{4}))')
@@ -131,6 +132,7 @@ def doi_template(doi, **kwargs):
 
 # (matcher regex, fixer fn.)
 FIXERS = [
+        (OCLC_SQ, oclc_template),
         (OCLCBLOCK, oclc_template),
         (OCLCBARE, oclc_template),
         (ISSNBLOCK, issn_template),
