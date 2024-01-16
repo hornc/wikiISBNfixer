@@ -5,4 +5,5 @@
 
 ./article_fix.py "$@" | tee >(tail -n+2 | head -n-2 | xclip -selection clipboard)
 
-read -p "Done? -- ${@: -1}"
+article=${@: -1}
+read -p "Done? -- https://en.wikipedia.org/wiki/${article// /_} -- $article"
