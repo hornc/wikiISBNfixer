@@ -63,7 +63,7 @@ ISBN_SQ = re.compile(r'(\[\[ISBN\|([0-9xX-]+)\]\])')
 ISBN_LINK = re.compile(r'(\[\[(?:International Standard Book Number\|)?ISBN\]\]\s*([0-9xX-]+))')
 
 # cite ISBN with stray LTR Unicode \u200e
-CITE_ISBN = re.compile(r'(\|\s*isbn\s*=(?:\u200e)?\s*([0-9xX–-]+))')
+CITE_ISBN = re.compile(r'(\|\s*isbn\s*=(?:\u200e)?\s*([0-9X– -]+[0-9X]))', re.IGNORECASE)
 
 # Journal book review ISBN:
 REVIEW_TITLE = re.compile(r'((cite journal[^}]+title\s*=\s*[^|]*ISBN[^|]*))', re.IGNORECASE)
