@@ -54,7 +54,7 @@ ISBN_EAN = re.compile(r'((?:ISBN/)?EAN:? (978[0-9-]+))')
 ISBN_1x = re.compile(r'(ISBN.?1[30]:?\s?([0-9xX-]{10,}))')
 ISBN_PLAIN = re.compile(r'[^{=-](\'*ISBN(?:&nbsp;|-1[03])?:?\'*[\s\|:]*([0-9–‐-]+[0-9xX]))', re.IGNORECASE)
 ISBN_EQUALS = re.compile(r'[^\|&]\s*(isbn\s*=\s*([0-9-]+[0-9xX]))', re.IGNORECASE)  # isbn= outside a template
-HYPHENATE_EXISTING = re.compile(r'({{\s*ISBN\s*\|\s*([0-9xX-]+)}})')
+HYPHENATE_EXISTING = re.compile(r'({{\s*ISBN\s*\|\s*([0-9xX\|-]+)}})')
 ISBN_SPACED = re.compile(r'(ISBN ((97[89])? ?([0-9]+ )+[0-9xX]+))(?:[<,\.]|$)')
 ISBN_BDI = re.compile(r'(ISBN <bdi>([0-9xX-]+)</bdi>)')
 ISBN_SQ = re.compile(r'(\[\[ISBN\|([0-9xX-]+)\]\])')
@@ -77,6 +77,7 @@ LIST_MARKER = re.compile(r'^([*#]+)([^*# ]|$)')
 
 
 def isbn_template(isbn, sbn=False, table=False, **kwargs):
+    #print('--DEBUG--', isbn)
     isbn = isbn.replace('–', '-')
     isbn = isbn.replace(' ', '')
     if not sbn and len(isbn) == 9:
@@ -87,7 +88,7 @@ def isbn_template(isbn, sbn=False, table=False, **kwargs):
     elif table:
         template = '{{ISBNT|'
     try:
-        return template + hyphenate(isbn) + '}}'
+        return template + '|'.join(hyphenate(v) for v in isbn.split('|')) + '}}'
     except IsbnMalformedError as e:
         return template + isbn + '}}'
     except Exception as e:
